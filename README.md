@@ -38,7 +38,37 @@ This guide walks through configuring SAML with AWS Cognito to enable Single Sign
 
 ---
 
-## Step 4: Set Up Environment Variables
+## Step 4: Setup Server and App
+### Prerequisites
+   - Add table
+   ```
+      CREATE TABLE saml_configuration (
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY NOT NULL,
+      provider_name TEXT NOT NULL,
+      user_id UUID NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+      company_id UUID NOT NULL UNIQUE REFERENCES companies (id) ON UPDATE CASCADE ON DELETE CASCADE,
+      is_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+   ``` 
+
+1. After cloning project navigate to `./app` folder for front-end and `./server` for back-end
+   - ``` cd ./app ```
+   - ``` cd ./server ```
+2. copy `.env.example` as `.env` 
+   - ``` cp .env.example .env ```
+3. install dependencies
+   - ```npm i```
+4. run server and app
+   - ```npm run dev```
+
+- Note: commands are same for both front-end and back-end 
+- Other tables are available in main node app use same database and schema
+
+---
+
+## Step 5: Set Up Environment Variables
 ## Environment Variables Example
 Add the following environment variables to your backend `.env` file:
 
@@ -48,13 +78,14 @@ AWS_COGNITO_CLIENT_ID=your-aws-cognito-client-id
 AWS_COGNITO_USER_POOL_ID=your-aws-cognito-user-pool-id
 AWS_COGNITO_DOMAIN=your-aws-cognito-domain
 AWS_COGNITO_DOMAIN_REGION=your-aws-cognito-domain-region
+SAML_CALLBACK_URL=your-node-app-url/api/v1/auth/saml/callback
 ```
 
 also check `.env.example` file for other environment variables
 
 ---
 
-## Step 4: Configure App Client SAML Settings
+## Step 6: Configure App Client SAML Settings
 1. In the Cognito user pool, go to **"App clients" > "App client settings"**.
 2. Select the **SAML identity provider** you created earlier.
 3. Enter **Callback URL(s)**:
@@ -71,7 +102,7 @@ also check `.env.example` file for other environment variables
 
 ---
 
-## Step 5: Configure Your Identity Provider (IdP)
+## Step 7: Configure Your Identity Provider (IdP)
 ### For Okta:
 1. Log in to your Okta admin dashboard.
 2. Add a new SAML application:
@@ -84,7 +115,7 @@ also check `.env.example` file for other environment variables
 
 ---
 
-## Step 6: Configure SAML Identity Provider in Cognito
+## Step 8: Configure SAML Identity Provider in Cognito
 1. Login in application vai email and password got to **"Company SAML Settings Page"**.
 2. Select **"SAML Provider"**: A name for your IdP (e.g., `Okta` or `AzureAD`).
 3. Enter one of the following details:
@@ -94,7 +125,7 @@ also check `.env.example` file for other environment variables
 
 ---
 
-## Step 7: Test the SAML Flow
+## Step 9: Test the SAML Flow
 1. Log in to application enter email click on continue
 2. now you can see two options select the **SAML Login** option for saml other wise select **Password Login**.
 2. The user will be redirected to the IdP's login page.
