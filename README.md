@@ -33,7 +33,8 @@ This guide walks through configuring SAML with AWS Cognito to enable Single Sign
 1. In the Cognito user pool, go to **"Branding" > "Domain"**.
 2. Go to **"Create resource server"**
 2. Enter a unique domain prefix (e.g., `your-app-name`) and click **"Create resource server"**.
-   - This generates your Cognito-hosted domain, e.g., `https://your-app-name.auth.us-east-1.amazoncognito.com`.
+   - This generates your Cognito-hosted domain, 
+         e.g., `https://your-app-name.auth.us-east-1.amazoncognito.com`.
 
 ---
 
@@ -54,7 +55,7 @@ AWS_COGNITO_DOMAIN_REGION=your-aws-cognito-domain-region
 1. In the Cognito user pool, go to **"App clients" > "App client settings"**.
 2. Select the **SAML identity provider** you created earlier.
 3. Enter **Callback URL(s)**:
-   - Example: `https://your-server-url.com/auth/callback` (This refers to backend url).
+   - Example: `https://your-server-url.com/v1/auth/callback` (This refers to backend url).
    - Example: `https://your-app-url.com/auth/callback` (This refers to front end url).
 4. Enable grant types:
    - **Authorization code grant**.
@@ -91,7 +92,7 @@ AWS_COGNITO_DOMAIN_REGION=your-aws-cognito-domain-region
 ---
 
 ## Step 7: Test the SAML Flow
-1. Log in to your application enter email click on continue
+1. Log in to application enter email click on continue
 2. now you can see two options select the **SAML Login** option for saml other wise select **Password Login**.
 2. The user will be redirected to the IdP's login page.
 3. After successful authentication, the user will be redirected back to the Cognito callback URL.
