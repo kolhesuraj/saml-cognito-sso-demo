@@ -49,6 +49,8 @@ AWS_COGNITO_USER_POOL_ID=your-aws-cognito-user-pool-id
 AWS_COGNITO_DOMAIN=your-aws-cognito-domain
 AWS_COGNITO_DOMAIN_REGION=your-aws-cognito-domain-region
 ```
+
+also check `.env.example` file for other environment variables
 ---
 
 ## Step 4: Configure App Client SAML Settings
