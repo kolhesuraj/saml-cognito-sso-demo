@@ -1,0 +1,46 @@
+{
+  "name": "saml_demo",
+  "version": "1.0.0",
+  "description": "This is sample application to demonstrate the SAML implementation in node app using AWS cognito and postgresSQL DB.",
+  "main": "./src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "sequelize": "sequelize --config src/config/config.json --migrations-path src/migrations",
+    "db:migrate": "sequelize db:migrate --config src/config/config.json --migrations-path src/migrations",
+    "db:seed": "sequelize db:seed --config src/config/config.json --migrations-path src/migrations",
+    "db:rollback": "sequelize db:migrate:undo --config src/config/config.json --migrations-path src/migrations",
+    "migration:create": "sequelize migration:generate --config src/config/config.json --migrations-path src/migrations --name"
+  },
+  "author": "SURAJ KOLHE",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.730.0",
+    "chalk": "^5.4.1",
+    "cls-hooked": "^4.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
+    "express-json-validator-middleware": "^3.0.1",
+    "helmet": "^8.0.0",
+    "http-status": "^2.1.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.1.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.5",
+    "stoppable": "^1.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "uuid": "^11.0.5",
+    "winston": "^3.17.0",
+    "xmldom": "^0.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.0.0"
+  }
+}
