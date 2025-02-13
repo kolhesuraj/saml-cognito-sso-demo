@@ -69,7 +69,7 @@ const Login = () => {
         variant: "destructive",
       });
       setRedirecting(false);
-      passwordForm.setValue("email", data.email);
+      passwordForm.reset({ email: data.email, password: "" });
       setShowPasswordField(true);
     }
   };
@@ -78,7 +78,6 @@ const Login = () => {
     setLoading(true);
     setLoginError("");
     try {
-      passwordForm.setValue("email", data.email);
       const res = await post(
         "auth/check-sign-in-options",
         {
@@ -93,6 +92,7 @@ const Login = () => {
         } else {
           setShowPasswordField(true);
         }
+        passwordForm.reset({ email: data.email, password: "" });
       } else {
         throw new Error(res?.message || "Email check failed");
       }
@@ -230,6 +230,26 @@ const Login = () => {
         </Form>
       ) : (
         <Form onSubmit={passwordForm.handleSubmit(handlePasswordSubmit)}>
+          <FormField
+            name="email" // Bind the email field here too
+            control={passwordForm.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="Enter your email"
+                    disabled={true}
+                  />
+                </FormControl>
+                <FormMessage
+                  message={passwordForm.formState.errors.email?.message}
+                />
+              </FormItem>
+            )}
+          />
           <FormField
             name="password"
             control={passwordForm.control}
