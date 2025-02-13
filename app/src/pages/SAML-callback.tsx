@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const SamlCallback: React.FC = () => {
   const navigate = useNavigate();
-  const [isToken, setIsToken] = useState(true);
+  const [isToken, setIsToken] = useState(false);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {

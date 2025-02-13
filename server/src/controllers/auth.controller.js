@@ -471,23 +471,29 @@ export const handleSAMLCallback = async (req, res, next) => {
     if (!code) {
       return res.status(400).send("Authorization code is missing!");
     }
-    // Send request to Cognito to exchange the code for tokens
-    const tokenResponse = await fetch(
-      `https://${process.env.AWS_COGNITO_DOMAIN}.auth.${process.env.AWS_COGNITO_DOMAIN_REGION}.amazoncognito.com/oauth2/token`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          client_id: process.env.AWS_COGNITO_CLIENT_ID,
-          client_secret: process.env.AWS_COGNITO_CLIENT_SECRET,
-          code: code,
-          redirect_uri: process.env.SAML_CALLBACK_URL,
-        }),
-      }
-    );
+
+    let tokenResponse;
+    try {
+      // Send request to Cognito to exchange the code for tokens
+      tokenResponse = await fetch(
+        `https://${process.env.AWS_COGNITO_DOMAIN}.auth.${process.env.AWS_COGNITO_DOMAIN_REGION}.amazoncognito.com/oauth2/token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            grant_type: "authorization_code",
+            client_id: process.env.AWS_COGNITO_CLIENT_ID,
+            client_secret: process.env.AWS_COGNITO_CLIENT_SECRET,
+            code: code,
+            redirect_uri: process.env.SAML_CALLBACK_URL,
+          }),
+        }
+      );
+    } catch (e) {
+      throw new Error("Failed to exchange code for tokens");
+    }
 
     if (!tokenResponse.ok) {
       return res
@@ -507,7 +513,7 @@ export const handleSAMLCallback = async (req, res, next) => {
 
     if (!currentUser) {
       return res.redirect(
-        `${process.env.APP_HOME}/auth/callback?access-token=${AccessToken}`
+        `${process.env.APP_HOME}/auth/callback?error=User Not Found!`
       );
     }
 
