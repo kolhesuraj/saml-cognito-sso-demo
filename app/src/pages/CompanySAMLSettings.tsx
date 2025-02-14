@@ -74,7 +74,7 @@ const CompanySAMLSettings = () => {
     setSubmitError("");
     try {
       const body = {
-        providerName: data.provider,
+        ...(!isUpdate && { providerName: data.provider }),
         ...(data.metadataType === "file"
           ? { metadataX509File: data.metadataContent }
           : { metadataUrl: data.metadataURL }),
