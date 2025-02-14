@@ -35,7 +35,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       </div>
       <img
         src={tracesTopRight}
-        className="absolute  top-0 h-full w-auto object-cover"
+        className="absolute  top-0 h-full w-full object-cover"
       />
       {/* <img
         src={tracesBottomLeft}
